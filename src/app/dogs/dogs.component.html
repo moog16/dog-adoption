@@ -1,0 +1,98 @@
+<div class='dogs__form-field'>
+  <mat-form-field class='dogs__text-field'>
+    <input
+      matInput
+      placeholder='Search for pets...'
+      [(value)]="searchValue"
+      (keyup)='onKey($event)'
+    />
+  </mat-form-field>
+</div>
+
+<h1 *ngIf='!searchValue' class='dogs__headline mdc-typography--headline2'>
+  Featured pets
+</h1>
+<div *ngIf='searchValue'>
+  <h2 class='mdc-typography--headline5'>
+    Results for "{{searchValue}}"
+  </h2>
+
+  <div class='dogs__filters'>
+    <mat-form-field class='dogs__filter'>
+      <mat-label>Breed</mat-label>
+      <mat-select
+        (selectionChange)="onBreedChange($event.value)"
+        [(value)]="filteredBreed"
+      >
+        <mat-option
+          *ngFor='let breed of breeds'
+          value='{{breed}}'
+        >
+          {{breed | titlecase}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class='dogs__filter'>
+      <mat-label>Age</mat-label>
+      <mat-select
+        (selectionChange)="onAgeChange($event.value)"
+        [(value)]="filteredAge"
+      >
+        <mat-option
+          *ngFor='let age of ages'
+          value='{{age.value}}'
+        >
+          {{age.text}} years
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-button (click)='clear()'>
+      clear
+    </button>
+  </div>
+</div>
+
+<div class='dogs__container'>
+  <mat-card
+    class='dogs__card'
+    *ngFor='let dog of dogs'
+    [routerLink]="['/details', dog.name]"
+  >
+    <img mat-card-image src='{{dog.imgPath}}' alt='image of {{dog.name}}' />
+    <mat-card-title class='mdc-typography--headline6'>
+      {{dog.name}}
+    </mat-card-title>
+    <mat-card-subtitle>
+      {{dog.nickname}}
+    </mat-card-subtitle>
+
+    <mat-card-actions>
+      <button
+        mat-icon-button
+        aria-label="Example icon-button with a heart icon"
+        *ngIf="dog.favorite"
+      >
+        <mat-icon
+          class='dog__card__favorite'
+          (click)="unfavorite($event, dog.name)"
+        >
+          favorite
+        </mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        aria-label="Example icon-button with a heart icon"
+        *ngIf="!dog.favorite"
+      >
+        <mat-icon
+          class='dog__card__favorite'
+          (click)="favorite($event, dog.name)"
+        >
+          favorite_border
+        </mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+</div>

@@ -1,0 +1,28 @@
+<h1>
+  Adopt a dog
+</h1>
+<div class='search'>
+  <form (submit)='onSubmit($event)'>
+    <mat-form-field class='search__form-field'>
+      <input
+        matInput
+        placeholder='Find your next baby...'
+        (keyup)='onKey($event)'
+        required
+      />
+    </mat-form-field>
+    <div>
+
+      <a
+        mat-button
+        mat-raised-button
+        [routerLink]="['/grid-results', searchValue]"
+      >
+        Search
+      </a>
+    </div>
+
+  </form>
+
+
+</div>
